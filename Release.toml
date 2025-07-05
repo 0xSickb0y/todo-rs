@@ -1,0 +1,43 @@
+[release]
+# Disable automatic pushing to allow manual verification
+push = false
+
+# Disable automatic publishing to crates.io (for now)
+publish = false
+
+# Enable shared version across workspace (if applicable)
+shared-version = true
+
+# Tag format
+tag-name = "v{{version}}"
+
+# Commit message format
+pre-release-commit-message = "Release v{{version}}"
+
+# Files to update during release
+[[release.pre-release-replacements]]
+file = "CHANGELOG.md"
+search = "## \\[Unreleased\\]"
+replace = """## [Unreleased]
+
+## [{{version}}] - {{date}}"""
+
+[[release.pre-release-replacements]]
+file = "CHANGELOG.md"
+search = "\\[Unreleased\\]: https://github.com/0xSickb0y/todo-rs/compare/v([0-9]+\\.[0-9]+\\.[0-9]+)...HEAD"
+replace = """[Unreleased]: https://github.com/0xSickb0y/todo-rs/compare/v{{version}}...HEAD
+[{{version}}]: https://github.com/0xSickb0y/todo-rs/compare/v$1...v{{version}}"""
+
+[[release.pre-release-replacements]]
+file = "README.md"
+search = "todo-rs = \"[0-9]+\\.[0-9]+\\.[0-9]+\""
+replace = "todo-rs = \"{{version}}\""
+
+# Hook to run tests before release
+pre-release-hook = ["cargo", "test", "--all-features"]
+
+# Hook to build docs
+[[release.pre-release-replacements]]
+file = "src/lib.rs"
+search = "//! todo-rs version [0-9]+\\.[0-9]+\\.[0-9]+"
+replace = "//! todo-rs version {{version}}"

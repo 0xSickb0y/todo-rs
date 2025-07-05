@@ -1,9 +1,32 @@
 [package]
 name = "todo-rs"
-version = "0.1.0"
-edition = "2024"
+version = "0.1.1"
+edition = "2021"
+authors = ["Your Name <your.email@example.com>"]
+description = "A simple and efficient CLI TODO application written in Rust"
+license = "MIT"
+repository = "https://github.com/0xSickb0y/todo-rs"
+homepage = "https://github.com/0xSickb0y/todo-rs"
+documentation = "https://docs.rs/todo-rs"
+readme = "README.md"
+keywords = ["cli", "todo", "task", "productivity", "command-line"]
+categories = ["command-line-utilities"]
 
 [dependencies]
-chrono = "0.4.41"
+anyhow = "1.0.89"
+chrono = { version = "0.4.41", features = ["serde"] }
 clap = { version = "4.3", features = ["derive"] }
 rusqlite = "0.36.0"
+
+[dev-dependencies]
+tempfile = "3.8"
+
+[[bin]]
+name = "todo-rs"
+path = "src/main.rs"
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1
+panic = "abort"
