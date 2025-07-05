@@ -92,7 +92,7 @@ Prerequisites:
 Generate and view the documentation:
 
 ```bash
-$ cargo doc --open
+$ cargo doc --open --no-deps
 ```
 
 
